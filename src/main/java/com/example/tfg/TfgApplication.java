@@ -1,12 +1,8 @@
 package com.example.tfg;
 
-import com.example.tfg.Model.Users;
-import com.example.tfg.Repository.UsuarioRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.mongodb.core.MongoTemplate;
+
 
 @SpringBootApplication
 public class TfgApplication {
@@ -14,20 +10,29 @@ public class TfgApplication {
     public static void main(String[] args) {
         SpringApplication.run(TfgApplication.class, args);
     }
-    @Bean
-    CommandLineRunner runner(UsuarioRepository repository, MongoTemplate mongoTemplate) {
+/*
+   @Bean
+    CommandLineRunner runner(UserRepository repository, MongoTemplate mongoTemplate) {
         return args -> {
-            String email = "jandro.araquerobles@gmail.com";
-            Users username = new Users(
-                    "Alejandro",
-                    "alejandro",
+
+            String email = "jamah@gmail.com";
+            Users users = new Users(
+                    "Jamila",
+                    "ahmed",
                     email
-
-
             );
-            //repository.insert(username);
+
+
+            repository.findByEmail(email)
+                    .ifPresentOrElse(s -> {
+                        System.out.println(s + "already exits");
+                    }, () -> {
+                        System.out.println("Inserting student" + users);
+                        repository.insert(users);
+                    });
+
+
         };
-    }
 
-
+    }*/
 }
