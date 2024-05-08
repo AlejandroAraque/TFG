@@ -21,7 +21,7 @@ public class Users implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    @NotBlank
+    @Indexed(unique = true)
     private String username;
 
     @NotBlank
