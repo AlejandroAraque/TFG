@@ -24,9 +24,15 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
-        repository.save(user);
 
-        var jwtToken = jwtService.generateToken(user);
+        // Guardar el usuario en la base de datos
+        Users savedUser = repository.save(user);
+
+        // Obtener el ID generado por MongoDB
+        String generatedId = savedUser.getId();
+        System.out.println("Generated ID: " + generatedId);
+
+        var jwtToken = jwtService.generateToken(savedUser);
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .build();
