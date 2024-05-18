@@ -4,6 +4,7 @@ import com.example.tfg.Model.Dataset;
 import com.example.tfg.Model.Users;
 import com.example.tfg.Repository.UserRepository;
 import com.example.tfg.Service.DatasetService;
+import com.example.tfg.Service.DatasetWithUsername;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -23,9 +25,15 @@ public class DatasetController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping
-    public List<Dataset> getAllDatasets() {
-        return datasetService.findAll();
+
+    @GetMapping("/datasets")
+    public List<DatasetWithUsername> getAllDatasets() {
+        List<Dataset> datasets = datasetService.findAll();
+        return datasets.stream().map(dataset -> {
+            Optional<Users> userOptional = userRepository.findById(dataset.getProviderId());
+            String username = userOptional.map(Users::getUsername).orElse("Unknown");
+            return new DatasetWithUsername(dataset, username);
+        }).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -33,7 +41,6 @@ public class DatasetController {
         Optional<Dataset> dataset = datasetService.findById(id);
         return dataset.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
         @PostMapping("/datasets")
         public ResponseEntity<Dataset> createDataset(@RequestBody Dataset dataset) {
