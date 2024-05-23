@@ -17,16 +17,19 @@ public class Dataset {
     private String providerId;
     private String name;
     private String description;
+    private String TermsOfUse;
     private BigDecimal price;
     private Date date;
+    private String accessTerms;
 
     public Dataset() {
     }
 
-    public Dataset(String providerId, String name, String description, BigDecimal price, Date date, String accessTerms) {
+    public Dataset(String providerId, String name, String description, String TermsOfUse, BigDecimal price, Date date, String accessTerms) {
         this.providerId = providerId;
         this.name = name;
         this.description = description;
+        this.TermsOfUse=TermsOfUse;
         this.price = price;
         this.date = date;
         this.accessTerms = accessTerms;
@@ -64,6 +67,14 @@ public class Dataset {
         this.description = description;
     }
 
+    public String getTermsOfUse() {
+        return TermsOfUse;
+    }
+
+    public void setTermsOfUse(String termsOfUse) {
+        TermsOfUse = termsOfUse;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -88,7 +99,7 @@ public class Dataset {
         this.accessTerms = accessTerms;
     }
 
-    private String accessTerms;
+
 
 
     @Override

@@ -3,6 +3,7 @@ package com.example.tfg.Controller;
 import com.example.tfg.Model.Dataset;
 import com.example.tfg.Model.Users;
 import com.example.tfg.Repository.UserRepository;
+import com.example.tfg.Service.AccessRequestService;
 import com.example.tfg.Service.DatasetService;
 import com.example.tfg.Service.DatasetWithUsername;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/auth")
 public class DatasetController {
 
+
+    @Autowired
+    private AccessRequestService accessRequestService;
     @Autowired
     private DatasetService datasetService;
     @Autowired
@@ -36,11 +40,14 @@ public class DatasetController {
         }).collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Dataset> getDatasetById(@PathVariable String id) {
-        Optional<Dataset> dataset = datasetService.findById(id);
-        return dataset.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+
+    @GetMapping("/myDatasets")
+    public List<Dataset> getDatasetsByAuthenticatedProvider() {
+        String providerId = datasetService.getAuthenticatedProviderId();
+        return datasetService.getDatasetsByProviderId(providerId);
     }
+
+
 
         @PostMapping("/datasets")
         public ResponseEntity<Dataset> createDataset(@RequestBody Dataset dataset) {
@@ -71,29 +78,10 @@ public class DatasetController {
             }
         }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Dataset> updateDataset(@PathVariable String id, @RequestBody Dataset datasetDetails) {
-        Optional<Dataset> dataset = datasetService.findById(id);
-        if (dataset.isPresent()) {
-            // actualizar propiedades del dataset
-            Dataset existingDataset = dataset.get();
-            existingDataset.setName(datasetDetails.getName());
-            existingDataset.setDescription(datasetDetails.getDescription());
-            // Actualizar el dataset en la base de datos
-            return ResponseEntity.ok(datasetService.save(existingDataset));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDataset(@PathVariable String id) {
-        if (datasetService.findById(id).isPresent()) {
-            datasetService.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-}
+
+
+
 
