@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface AccessRequestRepository extends MongoRepository<AccessRequest, String> {
+    List<AccessRequest> findByConsumerId(String consumerId);
     List<AccessRequest> findByDatasetIdIn(List<String> datasetIds);
 }

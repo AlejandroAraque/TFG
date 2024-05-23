@@ -1,5 +1,7 @@
 package com.example.tfg.Controller;
 
+import com.example.tfg.DTO.EnrichedAccessRequestDTO;
+import com.example.tfg.DTO.RequestedAccessRequestDTO;
 import com.example.tfg.Model.AccessRequest;
 import com.example.tfg.Model.Users;
 import com.example.tfg.Repository.UserRepository;
@@ -71,9 +73,15 @@ public class AccessRequestController {
 
 
     @GetMapping("/access-requests/received")
-    public List<AccessRequest> getReceivedAccessRequests() {
+    public List<EnrichedAccessRequestDTO> getReceivedAccessRequests() {
         String providerId = datasetService.getAuthenticatedProviderId();
-        return datasetService.getAccessRequestsForProvider(providerId);
+        return datasetService.getEnrichedAccessRequestsForProvider(providerId);
+    }
+
+    @GetMapping("/access-requests/requested")
+    public List<RequestedAccessRequestDTO> getRequestedAccessRequests() {
+        String userId = datasetService.getAuthenticatedProviderId();
+        return datasetService.getRequestedAccessRequestsForUser(userId);
     }
 
 
