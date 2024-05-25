@@ -1,21 +1,28 @@
 package com.example.tfg.Model;
 
-import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "datasetContent")
-@AllArgsConstructor
 public class DatasetContent {
     @Id
     private String id;
-    private String DatasetContent;
+    private String Datasetcontenido;
+    private String fileType;
 
-    public DatasetContent() {
+    public DatasetContent(String id, String Datasetcontenido,  String fileType ) {
+        this.id = id;
+        this.Datasetcontenido = Datasetcontenido;
+        this.fileType = fileType;
+
     }
 
-    public DatasetContent(String datasetContent) {
-        DatasetContent = datasetContent;
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public String getId() {
@@ -26,11 +33,11 @@ public class DatasetContent {
         this.id = id;
     }
 
-    public String getDatasetContent() {
-        return DatasetContent;
+    public String getDatasetcontenido() {
+        return Datasetcontenido;
     }
 
-    public void setDatasetContent(String datasetContent) {
-        DatasetContent = datasetContent;
+    public void setDatasetcontenido(String datasetcontenido) {
+        this.Datasetcontenido = datasetcontenido;
     }
 }

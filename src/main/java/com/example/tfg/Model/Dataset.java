@@ -19,18 +19,28 @@ public class Dataset {
     private String description;
     private String TermsOfUse;
     private BigDecimal price;
+    private String Access;
     private Date date;
 
     public Dataset() {
     }
 
-    public Dataset(String providerId, String name, String description, String TermsOfUse, BigDecimal price, Date date) {
+    public Dataset(String providerId, String name, String description, String TermsOfUse, BigDecimal price, Date date, String Access) {
         this.providerId = providerId;
         this.name = name;
         this.description = description;
         this.TermsOfUse=TermsOfUse;
         this.price = price;
         this.date = date;
+        this.Access = Access;
+    }
+
+    public String getAccess() {
+        return Access;
+    }
+
+    public void setAccess(String access) {
+        Access = access;
     }
 
     public String getId() {

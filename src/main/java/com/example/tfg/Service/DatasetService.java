@@ -65,7 +65,6 @@ public class DatasetService {
                 dto.setDatasetDescription(dataset.getDescription());
                 dto.setDatasetPrice(dataset.getPrice());
                 dto.setDatasetDate(dataset.getDate());
-                dto.setDatasetAccessTerms(dataset.getAccessTerms());
                 dto.setDatasetTermsOfUse(dataset.getTermsOfUse());
             }
 
