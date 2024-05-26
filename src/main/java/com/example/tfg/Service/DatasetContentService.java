@@ -25,7 +25,9 @@ public class DatasetContentService {
         return datasetContentRepository.findById(id);
     }
 
-    // Puedes agregar más métodos según sea necesario
+    public void deleteById(String id) {
+        datasetContentRepository.deleteById(id);
+    }
 
 }
 

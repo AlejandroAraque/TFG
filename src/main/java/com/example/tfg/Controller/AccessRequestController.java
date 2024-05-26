@@ -89,10 +89,11 @@ public class AccessRequestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AccessRequest> updateAccessRequest(@PathVariable String id, @RequestBody AccessRequest accessRequestDetails) {
-        Optional<AccessRequest> accessRequest = accessRequestService.findById(id);
-        if (accessRequest.isPresent()) {
-            accessRequestDetails.setId(id);
-            return ResponseEntity.ok(accessRequestService.save(accessRequestDetails));
+        Optional<AccessRequest> accessRequestOptional = accessRequestService.findById(id);
+        if (accessRequestOptional.isPresent()) {
+            AccessRequest accessRequest = accessRequestOptional.get();
+            accessRequest.setStatus(accessRequestDetails.getStatus());
+            return ResponseEntity.ok(accessRequestService.save(accessRequest));
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -101,8 +101,9 @@ public class DatasetController {
         }
 
         Dataset dataset = datasetOptional.get();
+        System.out.println(dataset);
 
-        if ("public".equals(dataset.getAccess())) {
+            System.out.println(dataset);
             Optional<DatasetContent> datasetContentOptional = datasetContentService.findById(id);
             if (datasetContentOptional.isPresent()) {
                 DatasetContent datasetContent = datasetContentOptional.get();
@@ -127,9 +128,25 @@ public class DatasetController {
             } else {
                 return ResponseEntity.notFound().build();
             }
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+
+    }
+
+    @DeleteMapping("/datasets/{id}")
+    public ResponseEntity<Void> deleteDataset(@PathVariable String id) {
+        // Eliminar el dataset
+        Optional<Dataset> datasetOptional = datasetService.findById(id);
+        if (!datasetOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
+        datasetService.deleteById(id);
+
+        // Eliminar el contenido del dataset
+        Optional<DatasetContent> datasetContentOptional = datasetContentService.findById(id);
+        if (datasetContentOptional.isPresent()) {
+            datasetContentService.deleteById(id);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
 
